@@ -8,32 +8,28 @@ $admin = $_SESSION['admin'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Giftshop pokloni">
 
-    <title>Add Category</title>
+    <title>GiftSHOP</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
 
 </head>
 
@@ -52,7 +48,7 @@ $admin = $_SESSION['admin'];
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php">GIFTSHOP ADMIN</a></li>
+                    <li><a href="http://localhost/giftshop/admin/admin_panel.php">GIFTSHOP ADMIN</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
 
@@ -60,22 +56,24 @@ $admin = $_SESSION['admin'];
                             <?php
                             while ($c = mysqli_fetch_array($categories_result, MYSQLI_ASSOC)) {
                                 ?>
-                                <li><a href="salate.php?category_id=<?php echo $c['idkategorija']; ?>"><?php echo $c['naziv_kategorije']; ?></a></li>
+                                <li><a href="products.php?id_category=<?php echo $c['id_category']; ?>"><?php echo $c['category_name']; ?></a></li>
                                 <li role="separator" class="divider"></li>
                             <?php
                             }
                             ?>
                         </ul>
                     </li>
-                    <li><a href="admin/add_product.php">Add product</a></li>
-                    <li><a href="admin/add_category.php">Add category</a></li>
-                    <li class="right"><a href="includes/logout.php">Log Out</a> </li>
+                    <li><a href="http://localhost/giftshop/admin/admin_add_product.php">Add product</a></li>
+                    <li><a href="http://localhost/giftshop/admin/admin_add_category.php">Add category</a></li>
+                    <li class="right"><a href="http://localhost/giftshop/includes/logout.php">Log Out</a> </li>
 
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
 
     </nav>
+
+
 
 
     <div class="container">
@@ -110,25 +108,26 @@ $admin = $_SESSION['admin'];
         event.preventDefault();
 
         $.post("add_category.php", {
-                "category_name": $("#name").val()
-            }, function(data) {
-                $("#name").val(""); 
-                if (data == "true") {
-                    Swal.fire({
-                        position: 'center',
-                        type: 'success',
-                        title: 'Category added',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Probably category already exists!'
-                    })
-                }
-            });
+            "category_name": $("#name").val()
+        }, function(data) {
+            $("#name").val("");
+            if (data == "true") {
+                Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Category added',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Probably category already exists!'
+                })
+            }
+        });
+
     });
 </script>
 

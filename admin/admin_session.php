@@ -8,10 +8,10 @@ if(isset($_SESSION['admin'])){
 
     $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
     if ($row['username']!=$user_check){
-        header("location:admin_login.php");
+        header("location: http://localhost/giftshop/admin_login.php");
     } else {
     }
 } else {
-    header("location:admin_login.php");
+    header("location:http://localhost/giftshop/admin_login.php");
 }
 ?>
