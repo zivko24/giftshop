@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -40,9 +44,19 @@
             </ul>
 
             <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']!=0) {
+               echo '<li class="nav-item">
                <a class="nav-link" href="includes/logout.php">Logout</a>
-            </li>
+            </li>';
+               
+            } else {
+               echo '<li class="nav-item">
+               <a class="nav-link" href="login.php">Login</a>
+            </li>';
+            }
+            
+            ?>
+            
          </ul>
          </div>
       </nav>

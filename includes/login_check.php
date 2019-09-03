@@ -8,9 +8,10 @@ $SQL="SELECT * from user WHERE (email='$username' or username='$username') and p
 $result=mysqli_query($connection, $SQL);
 
 $user=mysqli_fetch_array($result, MYSQLI_ASSOC);
-if ($result) {
-    $_SESSION['user']=(int) $user['id_user'];
+if ($user) {
+    $_SESSION['user']= $user['id_user'];
     $_SESSION['guest']=false;
+    header('Location: ../index.php');
 }
 else {
     header('Location: ../login.php?failed');
