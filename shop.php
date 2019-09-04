@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('includes/db_config.php');
-var_dump($_SESSION);
 $categories_sql = "SELECT * from category";
 $categories_result = mysqli_query($connection, $categories_sql);
 
@@ -45,8 +44,8 @@ $random = mysqli_fetch_all($random_result, MYSQLI_ASSOC);
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+  <nav class="navbar navbar-expand-md navbar-light bg-light container-fluid">
+    <a class="navbar-brand" href="index.php">
       <img src="img/logo.png" class="col-1 d-none d-sm-inline-block" alt="giftshop">
       <strong>GiftSHOP</strong>
     </a>
@@ -60,33 +59,27 @@ $random = mysqli_fetch_all($random_result, MYSQLI_ASSOC);
           <a class="nav-link" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Products</a>
+          <a class="nav-link" href="about.php">About us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="shop.php">Shop</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
 
+      </ul>
       <ul class="nav navbar-nav ml-auto">
-        <?php if (isset($_SESSION['cart'])) {
-          ?>
-          <a href="cart.php">
-          <button type="button" class="btn btn-primary">
-            <i class="fa fa-shopping-cart d-inline" aria-hidden="true"></i>
-          </button>
-          </a>
-        <?php
+        <?php if (isset($_SESSION['user']) && $_SESSION['user'] != 0) {
+          echo '<li class="nav-item">
+               <a class="nav-link" href="includes/logout.php">Logout</a>
+            </li>';
+        } else {
+          echo '<li class="nav-item">
+               <a class="nav-link" href="login.php">Login</a>
+            </li>';
         }
+
         ?>
 
       </ul>
-
-
-
-
     </div>
   </nav>
 

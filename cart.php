@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('includes/db_config.php');
-var_dump($_SESSION);
 
 ?>
 <!DOCTYPE html>
@@ -53,9 +52,6 @@ var_dump($_SESSION);
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="index.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="shop.php">Shop</a>
@@ -117,7 +113,7 @@ var_dump($_SESSION);
                         ?>
 
                         <tr>
-                            <td colspan="2"> <button class="btn btn-success"> Checkout </button> </td>
+                            <td colspan="2"> <button id="checkout" class="btn btn-success"> Checkout </button> </td>
                             <td colspan="2"> <button id="reset_cart" class="btn btn-danger"> Remove everything </button> </td>
                         </tr>
                     </table>
@@ -160,7 +156,6 @@ var_dump($_SESSION);
             });
 
             $("#reset_cart").on("click", function(e) {
-
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -170,7 +165,7 @@ var_dump($_SESSION);
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
-                     $.post('includes/reset_cart.php');
+                    $.post('includes/reset_cart.php');
 
                     if (result.value) {
                         Swal.fire(
@@ -178,7 +173,49 @@ var_dump($_SESSION);
                             'Your file has been deleted.',
                             'success'
                         )
+                        location.reload();
+
                     }
+                })
+            });
+
+            $("#checkout").on("click", function(e) {
+                Swal.fire({
+                    title: 'Checkout?',
+                    text: "Do you wana order your gifts?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, finish my order!'
+                }).then((result) => {
+                    $.post('includes/checkout.php', {}, function(result) {
+                        if (result === "success") {
+
+                            Swal.fire(
+                                'Ordered!',
+                                'Your gifts has been ordered',
+                                'success'
+                            )
+                        } else if (result === "user_error") {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Error...',
+                                text: 'You need to Log In first!'
+                            });
+                            window.setTimeout(function() {
+                                window.location = "http://localhost/giftshop/login.php";
+                            }, 1500);
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Error!'
+                            })
+                        }
+                    });
+
+
                 })
             });
 

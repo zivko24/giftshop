@@ -82,7 +82,7 @@ $admin = $_SESSION['admin'];
             </div>
 
             <?php
-            $SQLporudzbine = "SELECT * from porudzbina WHERE status=1";
+            $SQLporudzbine = "SELECT orders.id, orders.order_status, orders.price, order_date, user.name, user.street, user.number, user.city, user.country from orders left JOIN user ON orders.user_id=user.id_user WHERE order_status='ordered'";
             $resultPorudzbine = mysqli_query($connection, $SQLporudzbine);
             while ($row = mysqli_fetch_array($resultPorudzbine, MYSQLI_ASSOC)) {
                 $status = "";
@@ -91,11 +91,16 @@ $admin = $_SESSION['admin'];
                     <div class=\"panel-heading\">Pošiljka na cekanju</div>
                     <div class=\"panel-body\">
                         <table class='table'>
-                            <tr><th>Broj porudzbine</th><td>" . $row['broj_posiljke'] . "</td></tr>
-                            <tr><th>Iznos posiljke</th><td>" . $row['ukupan_iznos'] . "</td></tr>
-                            <tr><th>Vreme porucivanja</th><td>" . $row['datum_porudzbine'] . "</td></tr>
+                        <tr><th>Broj porudzbine</th><td>" . $row['id'] . "</td></tr>
+                        <tr><th>Iznos posiljke</th><td>" . $row['price'] . "</td></tr>
+                        <tr><th>Vreme porucivanja</th><td>" . $row['order_date'] . "</td></tr>
+                        <tr><th>Ime</th><td>" . $row['name'] . "</td></tr>
+                        <tr><th>Grad</th><td>" . $row['city'] . "</td></tr>
+                        <tr><th>Ulica</th><td>" . $row['street'] . "</td></tr>
+                        <tr><th>Broj</th><td>" . $row['number'] . "</td></tr>
+                        <tr><th>Drzava</th><td>" . $row['country'] . "</td></tr>
                         </table>
-                        <button class='btn btn-success right spremnaP' data-id='" . $row['idporudzbina'] . "'>Spremna</button>
+                        <button class='btn btn-success right spremnaP' data-id='" . $row['id'] . "'>Spremna</button>
 
                     </div>
                 </div>
@@ -112,7 +117,7 @@ $admin = $_SESSION['admin'];
             </div>
 
             <?php
-            $SQLporudzbine = "SELECT * from porudzbina WHERE status=2";
+            $SQLporudzbine = "SELECT orders.id, orders.order_status, orders.price, order_date, user.name, user.street, user.number, user.city, user.country from orders left JOIN user ON orders.user_id=user.id_user WHERE order_status='ready'";
             $resultPorudzbine = mysqli_query($connection, $SQLporudzbine);
             while ($row = mysqli_fetch_array($resultPorudzbine, MYSQLI_ASSOC)) {
                 $status = "";
@@ -121,12 +126,17 @@ $admin = $_SESSION['admin'];
                     <div class=\"panel-heading\">Spremna porudzbina</div>
                     <div class=\"panel-body\">
                         <table class='table'>
-                            <tr><th>Broj porudzbine</th><td>" . $row['broj_posiljke'] . "</td></tr>
-                            <tr><th>Iznos posiljke</th><td>" . $row['ukupan_iznos'] . "</td></tr>
-                            <tr><th>Vreme porucivanja</th><td>" . $row['datum_porudzbine'] . "</td></tr>
+                            <tr><th>Broj porudzbine</th><td>" . $row['id'] . "</td></tr>
+                            <tr><th>Iznos posiljke</th><td>" . $row['price'] . "</td></tr>
+                            <tr><th>Vreme porucivanja</th><td>" . $row['order_date'] . "</td></tr>
+                            <tr><th>Ime</th><td>" . $row['name'] . "</td></tr>
+                            <tr><th>Grad</th><td>" . $row['city'] . "</td></tr>
+                            <tr><th>Ulica</th><td>" . $row['street'] . "</td></tr>
+                            <tr><th>Broj</th><td>" . $row['number'] . "</td></tr>
+                            <tr><th>Drzava</th><td>" . $row['country'] . "</td></tr>
                         </table>
                     </div>
-                </div>
+                    </div>
                 ";
             }
             ?>
@@ -139,8 +149,8 @@ $admin = $_SESSION['admin'];
 <script>
     $('.spremnaP').click(function() {
         var id = $(this).data('id')
-        $.post('ajax/spremna.php', {
-            'id_porudzbine': id
+        $.post('order_ready.php', {
+            'order_id': id
         }, function() {
             location.reload();
         })

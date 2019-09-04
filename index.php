@@ -15,6 +15,13 @@ session_start();
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    <script src="js/jquery-3.4.1.js"></script>
    <script src="js/bootstrap.min.js"></script>
+   <style>
+      .blur{
+         background-color: #a5a5a5;
+         border-radius: 25px;
+         padding:20px;
+      }
+   </style>
 </head>
 
 <body>
@@ -33,14 +40,12 @@ session_start();
                   <a class="nav-link" href="index.php">Home</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="#">Products</a>
+                  <a class="nav-link" href="about.php">About us</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" href="shop.php">Shop</a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Contact</a>
-               </li>
+          
             </ul>
 
             <ul class="nav navbar-nav ml-auto">
@@ -63,14 +68,20 @@ session_start();
    <div class="wrapper">
 
       <header>
+      <div class="container">
+              <div class="carousel-caption text-left blur">
+                <h1>Welcome to our shop</h1>
+                <p> Visit our SHOP page for more products!</p>
+                <p><a class="btn btn-lg btn-primary" href="shop.php" role="button">SHOP</a></p>
+              </div>
+            </div>
       </header>
       <div class="content">
-         <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-         </p>
-         <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-         </p>
+      <h3>Pokloni</h3>
+                        <p>Gift.shop doo je danas prodavnica najludjih i najorginalnijih poklona u Srbiji, kakve ste do sada mogli samo da gledate na internetu, ali ne i da naručite.
+                            Trudimo se i uživamo birajući artikle za našu ponudu, ali prihvatamo sve sve kritike i sugestije naših dragih posetilaca.
+
+                            Nama je bitno da uživamo u svom poslu i da su naše mušterije zadovoljne, jer bez toga ništa ne vredi. Osim novca..</p>
       </div>
    </div>
 </body>
