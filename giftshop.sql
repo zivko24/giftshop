@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2019 at 01:11 AM
+-- Generation Time: Sep 04, 2019 at 08:04 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.8
 
@@ -57,9 +57,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`) VALUES
-(6, 'poklon'),
-(7, 'novi poklon'),
-(11, 'solje');
+(6, 'Poklon'),
+(7, 'Pivo'),
+(11, 'Krigla'),
+(12, 'Carape');
 
 -- --------------------------------------------------------
 
@@ -73,6 +74,47 @@ CREATE TABLE `friend` (
   `birthday` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
+  `order_date` date DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `order_status`, `order_date`, `price`) VALUES
+(21, 6, 'ready', '2019-09-04', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_item`
+--
+
+CREATE TABLE `order_item` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order_item`
+--
+
+INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `quantity`) VALUES
+(26, 21, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -94,9 +136,11 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `category_id`, `price`, `image`) VALUES
-(9, 'prvi sa image', 'idalna', 6, '132', 'img/grcka-leto.jpg'),
+(9, 'Jedan', 'idalna', 6, '132', 'img/grcka-leto.jpg'),
 (10, 'proizvoooood', 'asdasd', 6, '123', 'img/logo-florecita.png'),
-(11, 'Novi proizvod', 'asdasdasdasd', 7, '312', 'img/cameralogo.jpg');
+(11, 'Novi proizvod', 'asdasdasdasd', 7, '312', 'img/cameralogo.jpg'),
+(12, 'Prijatelj solja', 'Ovo je opis za jfasdasd prijatelj solju', 11, '300', 'img/WhatsApp Image 2019-09-01 at 19.08.12.jpeg'),
+(13, 'Dva', 'dva', 12, '123', 'img/WhatsApp Image 2019-09-01 at 19.08.15.jpeg');
 
 -- --------------------------------------------------------
 
@@ -151,6 +195,21 @@ ALTER TABLE `friend`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_item_ibfk_1` (`order_id`),
+  ADD KEY `order_item_ibfk_2` (`product_id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -177,7 +236,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `friend`
@@ -186,10 +245,22 @@ ALTER TABLE `friend`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `order_item`
+--
+ALTER TABLE `order_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -206,6 +277,19 @@ ALTER TABLE `user`
 --
 ALTER TABLE `friend`
   ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`);
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product`
