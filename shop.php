@@ -64,9 +64,21 @@ $random = mysqli_fetch_all($random_result, MYSQLI_ASSOC);
         <li class="nav-item">
           <a class="nav-link" href="shop.php">Shop</a>
         </li>
-
+        
       </ul>
       <ul class="nav navbar-nav ml-auto">
+      <?php if (isset($_SESSION['cart'])) {
+          ?>
+          <li>
+          <a href="cart.php">
+          <button type="button" class="btn btn-primary">
+            <i class="fa fa-shopping-cart d-inline" aria-hidden="true"></i>
+          </button>
+          </a>
+        </li>
+        <?php
+        }
+        ?>
         <?php if (isset($_SESSION['user']) && $_SESSION['user'] != 0) {
           echo '<li class="nav-item">
                <a class="nav-link" href="includes/logout.php">Logout</a>
